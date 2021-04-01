@@ -7,7 +7,7 @@
   <title>urlMaker</title>
   <style>
     html, body, textarea {
-      font-size: 1.5rem;
+      font-size: 15px;
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       background: #ffefcf;
       color: #463423;
@@ -51,16 +51,20 @@
 
     input[type="checkbox"]:checked:after {
       content: '\2714';
-      font-size: 2.2rem;
+      font-size: 2rem;
       position: absolute;
-      top: -27px;
-      left: 3px;
+      top: -0.9rem;
+      left: 0.2rem;
       color: #0d548a;
     }
 
-
     .selection {
-      line-height: 2rem;
+      line-height: 1.5rem;
+    }
+
+    .selection label{
+      position: relative;
+      top: -0.5rem;
     }
 
     #newUrlName {
@@ -81,7 +85,7 @@
       padding: 0.5rem; 
       font-size: 1rem; 
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-      background-color: #ff7a00;
+      background-color: #fba04c;
       border-radius: 5px;
       border: 1px solid #d36600;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
@@ -89,9 +93,7 @@
     }
 
     button.copyBtn {
-      position: relative; 
-      top: -4rem; 
-      right: -1rem;
+      
     }
 
     .copyBtn span {
@@ -124,6 +126,7 @@
     }
 
     .localAlert {
+      z-index: 100;
       font-size: 1rem;
       display: none;
       text-align: center;
@@ -133,9 +136,9 @@
       background-color: #ffffff;
       border-top: 12px solid #d44000;
       margin-top: -4rem;
-      height: 7rem;
-      margin-left: -6.5rem;
-      width: 13rem;
+      height: auto;
+      margin-left: -25%;
+      width: 50%;
       padding: 1rem;
       border-radius: 10px;
       opacity: 0;
@@ -191,7 +194,7 @@
   <div class="localAlert">
     <span class="icon"></span>
     <h3>Text Copied!</h3>
-    <p class="successMessage">Message</p>
+    <!-- <p class="successMessage">Message</p> -->
   </div>
   <label for="urlname">Item Name/Title: </label>
   <br />
@@ -219,6 +222,7 @@
     Output:
     <div align="center">
       <textarea id="newUrlName"></textarea>
+      <br/>
       <button id="copyButton" class="copyBtn" title="Copy Url String">
         <span>📄
           <span>📄</span>
@@ -279,11 +283,11 @@
           try {
             let successful = document.execCommand('copy');
             let msg = successful ? 'Success! Copied the text: ' + copyText.value : 'Error. Unable to copy ' + copyText.value;
-            document.querySelector('.localAlert .successMessage').innerText = msg;
+            // document.querySelector('.localAlert .successMessage').innerText = msg;
             document.querySelector('.localAlert').classList.add('success');
             document.querySelector('.localAlert').style.display = "block";
           } catch (err) {
-            document.querySelector('.localAlert .successMessage').innerText = msg;
+            // document.querySelector('.localAlert .successMessage').innerText = msg;
             document.querySelector('.localAlert').style.display = "block";
           }
         } else {
@@ -299,7 +303,7 @@
         document.getElementById('replaceSpace').checked = true;
         document.getElementById('trimSpaces').checked = true;
         document.getElementById('removeSpecialChars').checked = true;
-        document.querySelector('.localAlert .successMessage').innerText = "";
+        // document.querySelector('.localAlert .successMessage').innerText = "";
         document.querySelector('.localAlert').classList.remove('success');
         document.querySelector('.localAlert').style.display = "none";
       })
