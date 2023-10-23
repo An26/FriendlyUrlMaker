@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>urlMaker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Filename Maker</title>
   <style>
     html, body, textarea {
       font-size: 15px;
@@ -53,7 +54,7 @@
       content: '\2714';
       font-size: 2rem;
       position: absolute;
-      top: -0.9rem;
+      top: -0.2rem;
       left: 0.2rem;
       color: #0d548a;
     }
@@ -188,8 +189,8 @@
 </head>
 <body>
   <!-- Code Created by An Huynh, 2021 -->
-  <h1>urlMaker</h1>
-  <p>Creates URL friendly link strings to use as WCM item names.</p>
+  <h1>File Name Maker</h1>
+  <p>Creates friendly file names.</p>
   <hr>
   <div class="localAlert">
     <span class="icon"></span>
@@ -203,19 +204,35 @@
   <sub>Any text that you would like to convert.</sub>
   <br />
   <br />
-  <div class="selection">
-    <input type="checkbox" id="removeCaps" name="removeCaps" checked>
-    <label for="removeCaps">Remove Capitalization</label><br>
-    <input type="checkbox" id="replaceSpace" name="replaceSpace" checked>
-    <label for="replaceSpace"> Replace Spaces with an Underscore ( _ )</label><br>
-    <input type="checkbox" id="trimSpaces" name="trimSpaces" checked>
-    <label for="trimSpaces"> Trim Spaces Before and After the Url</label><br>
-    <input type="checkbox" id="removeSpecialChars" name="removeSpecialChars" checked>
-    <label for="removeSpecialChars"> Remove Special Characters (!@#$%^&*()+:'"<>.,?/\|[](){})</label><br>
-    <br />
-    <input id="submitBtn" type="button" value="🔮 Create! ✨">
-    <input id="resetBtn" type="button" value="🔄 Clear">
+  <div class="row">
+    <div class="col-6 selection">
+      <h5>File Names</h3>
+      <input type="checkbox" id="removeCaps" name="removeCaps" checked>
+      <label for="removeCaps">Remove Capitalization</label><br>
+
+      <input type="checkbox" id="replaceSpace" name="replaceSpace" checked>
+      <label for="replaceSpace"> Replace Spaces with an Underscore ( _ )</label><br>
+
+      <input type="checkbox" id="removeSpecialChars" name="removeSpecialChars" checked>
+      <label for="removeSpecialChars"> Remove Special Characters</label><sub>(!@#$%^&*()+:'"<>.,?/\|[](){})</sub><br>
+      
+      <input type="checkbox" id="trimSpaces" name="trimSpaces" checked>
+      <label for="trimSpaces"> Trim Spaces Before and After the Url</label><br>
+
+    </div>
+    <div class="col-6 selection">
+      <h5>Display Names</h5>
+      <input type="checkbox" id="addCaps" name="addCaps">
+      <label for="addCaps">Add Capitalization</label><br>
+
+      <input type="checkbox" id="addSpace" name="addSpace">
+      <label for="addSpace">Replace Underscore with Spaces</label><br>
+
+    </div>
   </div>
+      <br />
+      <input id="submitBtn" type="button" value="🔮 Create! ✨">
+      <input id="resetBtn" type="button" value="🔄 Reset">
   <br>
   <br>
   <div class="output">
@@ -239,17 +256,49 @@
     function fn() {
       let urlString;
 
+      //checkbox change handler for remove/addCaps and remove/addSpaces functionality
+      document.getElementById('removeCaps').addEventListener('click', function(){
+        if (document.getElementById('removeCaps').checked) {
+          document.getElementById('addCaps').checked = false;
+        }
+      })
+
+      document.getElementById('addCaps').addEventListener('click', function () {
+        if (document.getElementById('addCaps').checked) {
+          document.getElementById('removeCaps').checked = false;
+        }
+      })
+
+      document.getElementById('replaceSpace').addEventListener('click', function () {
+        if (document.getElementById('replaceSpace').checked) {
+          document.getElementById('addSpace').checked = false;
+        }
+      })
+
+      document.getElementById('addSpace').addEventListener('click', function () {
+        if (document.getElementById('addSpace').checked) {
+          document.getElementById('replaceSpace').checked = false;
+        }
+      })
+
+      //when "create" is clicked!
       document.getElementById('submitBtn').addEventListener('click', function() {
         let urlString = document.getElementById('urlName').value;
         let removeCaps = document.getElementById('removeCaps').checked;
         let replaceSpace = document.getElementById('replaceSpace').checked;
         let trimSpaces = document.getElementById('trimSpaces').checked;
         let removeSpecialChars = document.getElementById('removeSpecialChars').checked;
+        let addCaps = document.getElementById('addCaps').checked;
+        let addSpace = document.getElementById('addSpace').checked;
 
         if (urlString !== "") {
           if (removeCaps) {
             urlString = urlString.toLowerCase();
-          } 
+          }
+
+          if (addCaps){
+            urlString = urlString.toLowerCase();
+          }
           
           if (trimSpaces) {
             urlString = urlString.trim();
@@ -257,6 +306,10 @@
           
           if (replaceSpace) {
             urlString = urlString.replace(/ /g, "_");
+          }
+
+          if (addSpace) {
+            urlString = urlString.replace("_", / /g);
           }
 
           if (removeSpecialChars) {
@@ -268,6 +321,8 @@
           alert("Please insert text to convert into a friendly URL string")
         }
       });
+
+      // create a function that toggles options for addcaps and addspace, if they are checked then it's sister item will be unchecked...
 
       document.getElementById('copyButton').addEventListener('click', function() {
         //reset the button actions
@@ -306,6 +361,8 @@
         // document.querySelector('.localAlert .successMessage').innerText = "";
         document.querySelector('.localAlert').classList.remove('success');
         document.querySelector('.localAlert').style.display = "none";
+        document.getElementById('addCaps').checked = false;
+        document.getElementById('addSpace').checked = false;
       })
     }
 
@@ -323,4 +380,3 @@
   </script>
 </body>
 </html>
-
